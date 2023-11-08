@@ -165,9 +165,9 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
     - name: Build Container image
-      run: docker build -t ${{ secrets.DOCKER_REPO }}:${{ github.run_number }} .
+      run: docker build -t ${{ secrets.DOCKER_REPO }}:${{ github.sha }} .
     - name: Publish Docker image
-      run: docker push ${{ secrets.DOCKER_REPO }}:${{ github.run_number }}
+      run: docker push ${{ secrets.DOCKER_REPO }}:${{ github.sha }}
   Deploy:
     needs: Docker_push
     runs-on: ubuntu-latest
@@ -183,7 +183,7 @@ jobs:
         run: |
             # Replace the image and tag in the manifest file
              echo "GitHub SHA: ${{ github.sha }}"
-             sed -i "s|preethiagnes/app:.*|preethiagnes/app:${{ github.run_number }}|" ./manifest/deployment.yaml
+             sed -i "s|preethiagnes/app:.*|preethiagnes/app:${{ github.sha }}|" ./manifest/deployment.yaml
 
       - name: Debug - Show Git Status After Changes
         run: git status
