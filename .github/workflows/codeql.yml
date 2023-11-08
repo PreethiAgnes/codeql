@@ -82,7 +82,7 @@ jobs:
         category: "/language:${{matrix.language}}"
 
     - name: Upload CodeQL Results
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: codeql-results
         path: /home/runner/work/_temp/codeql_databases/java.zip
