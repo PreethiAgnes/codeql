@@ -168,37 +168,37 @@ jobs:
       run: docker build -t ${{ secrets.DOCKER_REPO }}:${{ github.sha }} .
     - name: Publish Docker image
       run: docker push ${{ secrets.DOCKER_REPO }}:${{ github.sha }}
-  Deploy:
-    needs: Docker_push
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-        with:
-          repository: PreethiAgnes/Deployment   # Replace with the repository URL
-          ref: main 
-          token: ${{secrets.PAT_TOKEN }}
+  #Deploy:
+    #needs: Docker_push
+    #runs-on: ubuntu-latest
+    #steps:
+      #- name: Checkout Repository
+       # uses: actions/checkout@v3
+        #with:
+         # repository: PreethiAgnes/Deployment   # Replace with the repository URL
+          #ref: main 
+          #token: ${{secrets.PAT_TOKEN }}
    
-      - name: Modify Manifest
-        run: |
+      #- name: Modify Manifest
+       # run: |
             # Replace the image and tag in the manifest file
-             echo "GitHub SHA: ${{ github.sha }}"
-             sed -i "s|preethiagnes/app:.*|preethiagnes/app:${{ github.sha }}|" ./manifest/deployment.yaml
+        #     echo "GitHub SHA: ${{ github.sha }}"
+         #    sed -i "s|preethiagnes/app:.*|preethiagnes/app:${{ github.sha }}|" ./manifest/deployment.yaml
 
-      - name: Debug - Show Git Status After Changes
-        run: git status
-        shell: bash
+      #- name: Debug - Show Git Status After Changes
+       # run: git status
+        #shell: bash
  
 
-      - name: Commit and Push Change
-        run: |
-            git config --global user.name "PreethiAgnes"
-            git config --global user.email "preethiagnest@gmail.com"
-            git add ./manifest/deployment.yaml
-            git commit -m "Update image tag with github.sha"
-            git push origin main  
-        env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+      #- name: Commit and Push Change
+       # run: |
+        #    git config --global user.name "PreethiAgnes"
+         #   git config --global user.email "preethiagnest@gmail.com"
+          #  git add ./manifest/deployment.yaml
+           # git commit -m "Update image tag with github.sha"
+            #git push origin main  
+        #env:
+         # PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
 
   #Job-Ending-Notification:
 
