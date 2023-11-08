@@ -10,12 +10,12 @@ on:
       #- master
 
 jobs:
-  Job-Starting-Notification:
-    uses: Hamritha02/shared-workflows/.github/workflows/notification.yml@main
-    with:
-      message: Job Started!
-    secrets:
-      TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+  #Job-Starting-Notification:
+    #uses: Hamritha02/shared-workflows/.github/workflows/notification.yml@main
+    #with:
+      #message: Job Started!
+    #secrets:
+      #TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
 
   pre-push_hook:
     runs-on: ubuntu-latest
@@ -46,8 +46,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-      with:
-         token: ${{secrets.PAT_TOKEN }}
             
     - name: Build Maven
       run: mvn -B package --file pom.xml
